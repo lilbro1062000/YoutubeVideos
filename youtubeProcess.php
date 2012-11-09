@@ -54,7 +54,7 @@ $description ="";
 			// //	echo "$name " . strlen($name);
 			// echo "$mainstring \n";
 // 
-			// } 
+			 } 
 			
 			if (strlen(strstr($mainstring, "meta property=\"og:title\"")) > 0) {
 				$name = $mainstring;
@@ -62,15 +62,20 @@ $description ="";
 				echo "$name " . strlen($name);
 
 			} 
-			if (strlen(strstr($mainstring, "eow-description")) > 0) {
-				$description = $mainstring;
-				//$description =substr($description, 30, strlen($description) - 37);
-				echo "\n";
-				echo "$description";
-			}
+			
+			
 		}
 	}
+
+foreach ($html->find("p[id=eow-description]") as $element) {
+
+
+	
+$description = substr($element, 25);
+	$description =substr($description, 0,strlen($description)-4);
+var_dump ($description);
 }
+
 
 
 // after ward we need to get some information into the db and have it translate
