@@ -3,11 +3,12 @@
 // this will parse the urls and the get
 
 // first generate the url
+
 require_once "simple_html_dom.php";
 require_once 'connection.php';
 require_once "functions.php";
 
-$row = ex_query1Row("select * from ProcessVideos where processed ='No'");
+$row = ex_query1Row("select * from ProcessVideos where processed ='No' limit 1");
 $html = file_get_html('http://www.youtube.com' . $row["url"]);
 
 // What do i need 
@@ -16,23 +17,33 @@ $html = file_get_html('http://www.youtube.com' . $row["url"]);
 /// yes i can 
 //so ?
 
+$youtubeVidID =substr($row["url"], 9);
+
+
 // link for embed links  = 
- $embeded_Link  = "";
+ $embeded_Link  = "<iframe width=\"720\" 
+ height=\"640\" 
+ src=\"http://www.youtube.com/embed/$youtubeVidID\" frameborder=\"0\" allowfullscreen></iframe>";
+ 
+
+$Username="";
+$description ="";
 //foreach ($html->find('div[id=watch-container]') as $element) {
-		foreach ($html->find('div[id="watch-description]"') as $element) {
-			
-		}
+
 	
-	foreach ($html->find('head') as $element) {
+	foreach ($html->find('body') as $element) {
 
 	$s = explode('<', $element);
-
+				
 	for ($q = 0; $q < count($s); $q++) {
 		$mainstring = $s[$q];
-		//var_dump($mainstring);
-		
-		//div id="watch-description"
-		
+		// Find UserName
+		if (strlen(strstr($mainstring, "a href=\"/user/")) > 0) {
+			$Username= substr($mainstring, 14,strlen($mainstring)-156);
+			//echo "$Username";
+			
+		}
+
 		
 		if (strlen(strstr($mainstring, "meta property=\"og:")) > 0) {
 				var_dump($mainstring);
@@ -51,9 +62,9 @@ $html = file_get_html('http://www.youtube.com' . $row["url"]);
 				echo "$name " . strlen($name);
 
 			} 
-			if (strlen(strstr($mainstring, "meta property=\"og:description\"")) > 0) {
+			if (strlen(strstr($mainstring, "eow-description")) > 0) {
 				$description = $mainstring;
-				$description =substr($description, 30, strlen($description) - 37);
+				//$description =substr($description, 30, strlen($description) - 37);
 				echo "\n";
 				echo "$description";
 			}
@@ -67,4 +78,9 @@ $html = file_get_html('http://www.youtube.com' . $row["url"]);
 
 //id="watch-container"
 //echo $html;
+
+// video information 
+$embeded_Link;
+$youtubeVidID;
+$Username;
 ?>
