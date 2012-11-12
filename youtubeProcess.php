@@ -10,7 +10,7 @@ require_once "functions.php";
 
 $row = ex_query1Row("SELECT * 
 FROM  `ProcessVideos` 
-WHERE  `Key` =900");
+WHERE  `Key` =1");
 $html = file_get_html('http://www.youtube.com' . $row["url"]);
 
 // What do i need
@@ -36,12 +36,10 @@ foreach ($html->find('body') as $element) {
 	for ($q = 0; $q < count($s); $q++) {
 		$mainstring = $s[$q];
 		// Find UserName
-		if (strlen(strstr($mainstring, "rel=\"author\"")) > 0) {
+		if (strlen(strstr($mainstring, "link itemprop=\"url\" href=\"http://www.youtube.com/user/")) > 0) {
 			
-			$Username = substr($mainstring, 14);
-			$Username = substr($Username, 0,strlen($Username)-141);
-			
-
+			$Username = substr($mainstring, 54);
+			$Username = substr($Username, 0,strlen($Username)-9);
 		}
 		
 		if (strlen(strstr($mainstring, "itemprop=\"name\" content=")) > 0) {
@@ -68,11 +66,11 @@ foreach ($html->find("p[id=eow-description]") as $element) {
 	
 }
 
-echo "\n Name of Video is:" . $title;
-echo "\n Description of Video is:" . $description;
-echo "\n Embeded link of Video is: " . $embeded_Link;
-echo "\n image of Video is: " . $videoimage;
-echo "\n User Uploade of Video is: " . $Username;
+echo "\n<br /> Name of Video is:" . $title;
+echo "\n<br /> Description of Video is:" . $description;
+echo "\n<br /> Embeded link of Video is: " . $embeded_Link;
+echo "\n<br /> image of Video is: " . $videoimage;
+echo "\n<br /> User Upload of Video is: " . $Username;
 
 // after ward we need to get some information into the db and have it translate
 // first is the embeded link
