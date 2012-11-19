@@ -72,11 +72,16 @@ echo "\n<br /> Embeded link of Video is: " . $embeded_Link;
 echo "\n<br /> image of Video is: " . $videoimage;
 echo "\n<br /> User Upload of Video is: " . $Username;
 
-// after ward we need to get some information into the db and have it translate
-// first is the embeded link
+//first create a user if he doesnt exist 
+// well the link would not work ?
+// we can change it later 
+if(ex_query1RowAns("Select 1 from users where UserName='$Username'")!=1)
+{
+$query = "insert into users (UserName,fblink) value('$Username','/user/infiniteammoinc')";
+ex_query($query);
+$userid = ex_query1RowAns("Select ID from users where UserName ='$Username'");
+var_dump ($userid);
+exit;
+}
 
-//id="watch-container"
-//echo $html;
-
-// video information
 ?>
