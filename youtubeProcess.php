@@ -89,10 +89,13 @@ if(ex_query1RowAns("Select 1 from users where UserName='$Username'")!=1)
 	}
 $query = "insert into users (ID,UserName,fblink) value('".$random."','$Username','/user/infiniteammoinc')";
 ex_query($query);
-$userid = ex_query1RowAns("Select ID from users where UserName ='$Username'");
-$query = "Insert into video (videoName,mp4Pth,webMPath,Hash,VIdeoImage,UserID,dtupload,site) Values('$title','$embeded_Link','','".genUhash()."','$userid','',Youtube')";
-
-
 }
+
+$userid = ex_query1RowAns("Select ID from users where UserName ='$Username'");
+
+$query = "INSERT INTO video (VideoName ,mp4Path,webMPath ,Hash,videoImage,UserID,dtuploaded) VALUES (";
+$query .= "'" . $title . "', '" . $embeded_Link . "','" . "" . "','" . $uniqeHash . "','" . $videoimage . "','$userid','". to_mysqlDate(time()) . "')";
+
+ex_query($query);
 
 ?>
