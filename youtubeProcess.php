@@ -65,23 +65,34 @@ foreach ($html->find("p[id=eow-description]") as $element) {
 	$description = substr($description, 0, strlen($description) - 4);
 	
 }
-
+/*
 echo "\n<br /> Name of Video is:" . $title;
 echo "\n<br /> Description of Video is:" . $description;
 echo "\n<br /> Embeded link of Video is: " . $embeded_Link;
 echo "\n<br /> image of Video is: " . $videoimage;
 echo "\n<br /> User Upload of Video is: " . $Username;
-
+*/
 //first create a user if he doesnt exist 
 // well the link would not work ?
 // we can change it later 
 if(ex_query1RowAns("Select 1 from users where UserName='$Username'")!=1)
 {
-$query = "insert into users (UserName,fblink) value('$Username','/user/infiniteammoinc')";
+	// seems like i would have to check for a number that does not exist. 
+	$nt = "no";
+	
+	while ($nt!="Done") {
+		$random = rand (0 , 10000000000);
+		if (ex_query1RowAns("Select 1 from users where ID= $random")!="1") {
+			$nt="Done";
+		}
+		
+	}
+$query = "insert into users (ID,UserName,fblink) value('".$random."','$Username','/user/infiniteammoinc')";
 ex_query($query);
 $userid = ex_query1RowAns("Select ID from users where UserName ='$Username'");
-var_dump ($userid);
-exit;
+$query = "Insert into video (videoName,mp4Pth,webMPath,Hash,VIdeoImage,UserID,dtupload,site) Values('$title','$embeded_Link','','".genUhash()."','$userid','',Youtube')";
+
+
 }
 
 ?>
