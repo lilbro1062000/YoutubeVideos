@@ -90,12 +90,25 @@ if(ex_query1RowAns("Select 1 from users where UserName='$Username'")!=1)
 $query = "insert into users (ID,UserName,fblink) value('".$random."','$Username','/user/infiniteammoinc')";
 ex_query($query);
 }
-
+$hash = genUhash();
 $userid = ex_query1RowAns("Select ID from users where UserName ='$Username'");
-
-$query = "INSERT INTO video (VideoName ,mp4Path,webMPath ,Hash,videoImage,UserID,dtuploaded) VALUES (";
-$query .= "'" . $title . "', '" . $embeded_Link . "','" . "" . "','" . $uniqeHash . "','" . $videoimage . "','$userid','". to_mysqlDate(time()) . "')";
+if(ex_query1RowAns("Select 1 from video where videoImage ='$videoimage' and UserID='$userid'")!=1)
+{
+$query = "INSERT INTO video (VideoName ,mp4Path,webMPath ,Hash,videoImage,UserID,dtuploaded,site) VALUES (";
+$query .= "'" . $title . "', '" . $embeded_Link . "','" . "" . "','" .$hash . "','" . $videoimage . "','$userid','". to_mysqlDate(time()) . "','Youtube')";
 
 ex_query($query);
+
+}
+$videoid = ex_query1RowAns("Select ID from video where videoImage ='$videoimage' and UserID='$userid'");
+if(ex_query1RowAns("Select 1 from videodesc where  VidID ='$videoid'")!=1)
+{
+$query = "Insert into videodesc(VidID,txtDesc) Values(" . $videoid . ",'" . $description . "')";
+ex_query($query);
+$query = "Insert into videocatinfo(hash,Category) Values('" .  $hash. "','" . $row['string1'] . "')";
+ex_query($query);
+}
+
+// now to add description 
 
 ?>
