@@ -107,6 +107,8 @@ $query = "Insert into videodesc(VidID,txtDesc) Values(" . $videoid . ",'" . $des
 ex_query($query);
 $query = "Insert into videocatinfo(hash,Category) Values('" .  $hash. "','" . $row['string1'] . "')";
 ex_query($query);
+$query = "Insert into views(Video_ID=,Numwatched) Values('$videoid',0)";
+ex_query($query);
 }
 
 // now to add description 
