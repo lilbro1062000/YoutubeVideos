@@ -10,7 +10,7 @@ require_once "functions.php";
 
 $row = ex_query1Row("SELECT * 
 FROM  `ProcessVideos` 
-WHERE  `Key` =1");
+WHERE  `Key` =34");
 $html = file_get_html('http://www.youtube.com' . $row["url"]);
 
 // What do i need
@@ -22,7 +22,7 @@ $html = file_get_html('http://www.youtube.com' . $row["url"]);
 $youtubeVidID = substr($row["url"], 9);
 
 // link for embed links  =
-$embeded_Link = "<iframe width=\"720\" height=\"640\" src=\"http://www.youtube.com/embed/$youtubeVidID\" frameborder=\"0\" allowfullscreen></iframe>";
+$embeded_Link = "<iframe width=\"940\" height=\"530\" src=\"http://www.youtube.com/embed/$youtubeVidID\" frameborder=\"0\" allowfullscreen></iframe>";
 $Username = "";
 $description = "";
 $videoimage = "http://i2.ytimg.com/vi/" . $youtubeVidID . "/hqdefault.jpg";
@@ -107,10 +107,17 @@ $query = "Insert into videodesc(VidID,txtDesc) Values(" . $videoid . ",'" . $des
 ex_query($query);
 $query = "Insert into videocatinfo(hash,Category) Values('" .  $hash. "','" . $row['string1'] . "')";
 ex_query($query);
-$query = "Insert into views(Video_ID=,Numwatched) Values('$videoid',0)";
+$query = "Insert into views(Video_ID,Numwatched) Values('$videoid',0)";
 ex_query($query);
 }
 
 // now to add description 
 
+
+
+//now i should look at the videos to the side 
+// nah 
+//why not 
+// well because its a .......
+//ok then well lets clean everything up than 
 ?>
