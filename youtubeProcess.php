@@ -3,14 +3,22 @@
 // this will parse the urls and the get
 
 // first generate the url
+set_time_limit(0);
 
 require_once "simple_html_dom.php";
 require_once 'connection.php';
 require_once "functions.php";
-
+$results = ex_query("SELECT `Key` FROM ProcessVideos where `processed`='No'");
+while($row = mysql_fetch_array($results))
+			    {
+			    
+$row=$row[0];			    
 $row = ex_query1Row("SELECT * 
 FROM  `ProcessVideos` 
-WHERE  `Key` =34");
+WHERE  `Key` =$row");
+$key = $row["Key"];
+
+
 $html = file_get_html('http://www.youtube.com' . $row["url"]);
 
 // What do i need
@@ -119,5 +127,7 @@ ex_query($query);
 // nah 
 //why not 
 // well because its a .......
-//ok then well lets clean everything up than 
+//ok then well lets clean everything up than
+ex_query("UPDATE  `TMSprdDB`.`ProcessVideos` SET  `processed` =  'Yes' WHERE  `ProcessVideos`.`Key` =$key");
+} 
 ?>
