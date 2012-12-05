@@ -8,7 +8,7 @@ set_time_limit(0);
 require_once "simple_html_dom.php";
 require_once 'connection.php';
 require_once "functions.php";
-$results = ex_query("SELECT `Key` FROM ProcessVideos where `processed`='No'");
+$results = ex_query("SELECT `Key` FROM ProcessVideos where `processed`='No' LIMIT 0,20");
 while($row = mysql_fetch_array($results))
 			    {
 			    
@@ -30,7 +30,7 @@ $html = file_get_html('http://www.youtube.com' . $row["url"]);
 $youtubeVidID = substr($row["url"], 9);
 
 // link for embed links  =
-$embeded_Link = "<iframe width=\"720\" height=\"640\" src=\"http://www.youtube.com/embed/$youtubeVidID&autoplay=1\" frameborder=\"0\" allowfullscreen></iframe>";
+$embeded_Link = "<iframe width=\"940\" height=\"530\" src=\"http://www.youtube.com/v/$youtubeVidID&autoplay=1\" frameborder=\"0\" allowfullscreen></iframe>";
 $Username = "";
 $description = "";
 $videoimage = "http://i2.ytimg.com/vi/" . $youtubeVidID . "/hqdefault.jpg";
@@ -73,13 +73,13 @@ foreach ($html->find("p[id=eow-description]") as $element) {
 	$description = substr($description, 0, strlen($description) - 4);
 	
 }
-/*
-echo "\n<br /> Name of Video is:" . $title;
-echo "\n<br /> Description of Video is:" . $description;
-echo "\n<br /> Embeded link of Video is: " . $embeded_Link;
-echo "\n<br /> image of Video is: " . $videoimage;
-echo "\n<br /> User Upload of Video is: " . $Username;
-*/
+// 
+// echo "\n<br /> Name of Video is:" . $title;
+// echo "\n<br /> Description of Video is:" . $description;
+// echo "\n<br /> Embeded link of Video is: " . $embeded_Link;
+// echo "\n<br /> image of Video is: " . $videoimage;
+// echo "\n<br /> User Upload of Video is: " . $Username;
+// 
 //first create a user if he doesnt exist 
 // well the link would not work ?
 // we can change it later 
@@ -128,6 +128,6 @@ ex_query($query);
 //why not 
 // well because its a .......
 //ok then well lets clean everything up than
-ex_query("UPDATE  `TMSprdDB`.`ProcessVideos` SET  `processed` =  'Yes' WHERE  `ProcessVideos`.`Key` =$key");
+ex_query("UPDATE  `ProcessVideos` SET  `processed` =  'Yes' WHERE  `ProcessVideos`.`Key` =$key");
 } 
 ?>

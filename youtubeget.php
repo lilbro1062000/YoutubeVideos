@@ -9,7 +9,7 @@ require_once "functions.php";
 for ($i = 0; $i < 50; $i++) {
 
 	//echo(file_get_html('www.google.com'));
-$string1 = "unity3d";
+$string1 = "unity3d"; // Number in database
 $string2 = "programming";
 	$html = file_get_html('http://www.youtube.com/results?search_query='.$string1.'+'.$string2.'&page=' . $i);
 	foreach ($html->find('li[class=yt-grid-box]') as $element) {
