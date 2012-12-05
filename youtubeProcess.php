@@ -22,7 +22,7 @@ $html = file_get_html('http://www.youtube.com' . $row["url"]);
 $youtubeVidID = substr($row["url"], 9);
 
 // link for embed links  =
-$embeded_Link = "<iframe width=\"720\" height=\"640\" src=\"http://www.youtube.com/embed/$youtubeVidID\" frameborder=\"0\" allowfullscreen></iframe>";
+$embeded_Link = "<iframe width=\"720\" height=\"640\" src=\"http://www.youtube.com/embed/$youtubeVidID&autoplay=1\" frameborder=\"0\" allowfullscreen></iframe>";
 $Username = "";
 $description = "";
 $videoimage = "http://i2.ytimg.com/vi/" . $youtubeVidID . "/hqdefault.jpg";
